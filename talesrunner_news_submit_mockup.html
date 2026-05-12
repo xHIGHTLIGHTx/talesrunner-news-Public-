@@ -1,0 +1,266 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .page { max-width: 680px; padding: 0 0 2rem; }
+
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    margin-bottom: 2rem;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: #1a1a2e;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-icon svg { width: 18px; height: 18px; }
+  .logo-text { font-size: 15px; font-weight: 500; color: var(--color-text-primary); letter-spacing: 0.02em; }
+  .logo-sub { font-size: 11px; color: var(--color-text-tertiary); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .nav-link { font-size: 13px; color: var(--color-text-secondary); text-decoration: none; display: flex; align-items: center; gap: 4px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--color-text-tertiary);
+    margin-bottom: 1.5rem; padding: 0 20px;
+  }
+
+  .card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    margin: 0 20px 12px;
+  }
+
+  .field-label {
+    font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px; display: block;
+  }
+  .field-row { margin-bottom: 1rem; }
+  .field-row:last-child { margin-bottom: 0; }
+
+  input[type="text"], select, textarea {
+    width: 100%; font-size: 14px;
+    padding: 8px 10px;
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-secondary);
+    color: var(--color-text-primary);
+    outline: none;
+    transition: border-color 0.15s;
+    font-family: var(--font-sans);
+  }
+  input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: var(--color-border-primary);
+  }
+  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+  select { appearance: none; cursor: pointer; }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .upload-box {
+    border: 0.5px dashed var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 16px;
+    text-align: center;
+    background: var(--color-background-secondary);
+    cursor: pointer;
+  }
+  .upload-box i { font-size: 20px; color: var(--color-text-tertiary); display: block; margin-bottom: 4px; }
+  .upload-box span { font-size: 12px; color: var(--color-text-tertiary); }
+
+  .char-count { font-size: 11px; color: var(--color-text-tertiary); text-align: right; margin-top: 4px; }
+
+  .info-box {
+    margin: 0 20px 12px;
+    padding: 10px 14px;
+    background: var(--color-background-info);
+    border-radius: var(--border-radius-md);
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .info-box i { font-size: 16px; color: var(--color-text-info); margin-top: 1px; flex-shrink: 0; }
+  .info-box p { font-size: 12px; color: var(--color-text-info); line-height: 1.5; }
+
+  .actions {
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: 1.5rem;
+  }
+  .btn-secondary {
+    font-size: 13px; padding: 8px 16px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: transparent; cursor: pointer;
+    color: var(--color-text-secondary); font-family: var(--font-sans);
+  }
+  .btn-primary {
+    font-size: 13px; font-weight: 500; padding: 8px 20px;
+    border-radius: var(--border-radius-md);
+    border: none; cursor: pointer;
+    background: #1a1a2e; color: #fff;
+    font-family: var(--font-sans);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .tag {
+    font-size: 11px; padding: 3px 10px;
+    border-radius: 20px;
+    border: 0.5px solid var(--color-border-secondary);
+    color: var(--color-text-secondary);
+    cursor: pointer; background: var(--color-background-secondary);
+  }
+  .tag.active {
+    background: #1a1a2e; color: #fff; border-color: #1a1a2e;
+  }
+  .divider {
+    height: 0.5px; background: var(--color-border-tertiary);
+    margin: 1rem 0;
+  }
+  .step-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 20px; margin-bottom: 1.5rem;
+  }
+  .step { display: flex; align-items: center; gap: 6px; }
+  .step-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #1a1a2e; color: #fff;
+    font-size: 10px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-dot.inactive { background: var(--color-background-secondary); color: var(--color-text-tertiary); border: 0.5px solid var(--color-border-secondary); }
+  .step-name { font-size: 12px; color: var(--color-text-secondary); }
+  .step-name.active { color: var(--color-text-primary); font-weight: 500; }
+  .step-line { flex: 1; height: 0.5px; background: var(--color-border-tertiary); }
+</style>
+
+<div class="page" role="main">
+  <h2 class="sr-only">แบบฟอร์มส่งข่าวการแข่งขัน Tales Runner</h2>
+
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 12L8 8L12 12L16 8L20 12" stroke="#7c6fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 16L8 12L12 16L16 12L20 16" stroke="#4fc3f7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-text">Tales Runner</div>
+        <div class="logo-sub">News Hub</div>
+      </div>
+    </div>
+    <a class="nav-link" href="#">
+      <i class="ti ti-arrow-left" aria-hidden="true"></i> กลับหน้าหลัก
+    </a>
+  </div>
+
+  <div class="step-row">
+    <div class="step">
+      <div class="step-dot">1</div>
+      <span class="step-name active">กรอกข้อมูล</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-dot inactive">2</div>
+      <span class="step-name">ตรวจสอบ</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-dot inactive">3</div>
+      <span class="step-name">รอแอดมิน</span>
+    </div>
+  </div>
+
+  <div class="section-label">ข้อมูลข่าว</div>
+
+  <div class="card">
+    <div class="field-row">
+      <label class="field-label">หัวข้อข่าว</label>
+      <input type="text" placeholder="เช่น ผลการแข่งขัน Tales Runner World Cup รอบคัดเลือก" />
+    </div>
+
+    <div class="row2">
+      <div class="field-row">
+        <label class="field-label">ประเภทข่าว</label>
+        <select>
+          <option>ผลการแข่งขัน</option>
+          <option>ประกาศทัวร์นาเมนต์</option>
+          <option>ไฮไลท์และสรุป</option>
+          <option>อัปเดตกติกา</option>
+          <option>อื่นๆ</option>
+        </select>
+      </div>
+      <div class="field-row">
+        <label class="field-label">ระดับการแข่งขัน</label>
+        <select>
+          <option>ระดับโลก</option>
+          <option>ระดับเอเชีย</option>
+          <option>ระดับประเทศ</option>
+          <option>ระดับท้องถิ่น</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <label class="field-label">แท็ก</label>
+      <div class="tag-row">
+        <span class="tag active" onclick="this.classList.toggle('active')">#TalesRunner</span>
+        <span class="tag" onclick="this.classList.toggle('active')">#Tournament</span>
+        <span class="tag" onclick="this.classList.toggle('active')">#Esports</span>
+        <span class="tag" onclick="this.classList.toggle('active')">#WorldCup</span>
+        <span class="tag" onclick="this.classList.toggle('active')">#Thailand</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="field-row">
+      <label class="field-label">เนื้อหาข่าว</label>
+      <textarea placeholder="เขียนเนื้อหาข่าวที่นี่ ระบุรายละเอียดการแข่งขัน ผลการแข่ง ผู้ชนะ และข้อมูลสำคัญอื่นๆ..." id="content" oninput="document.getElementById('cc').textContent=this.value.length"></textarea>
+      <div class="char-count"><span id="cc">0</span> ตัวอักษร</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field-row" style="margin-bottom:0">
+      <label class="field-label">แนบรูปภาพ (ไม่บังคับ)</label>
+      <div class="upload-box">
+        <i class="ti ti-photo-up" aria-hidden="true"></i>
+        <span>คลิกเพื่ออัปโหลด หรือลากไฟล์มาวาง · PNG, JPG สูงสุด 5MB</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row2">
+      <div class="field-row" style="margin-bottom:0">
+        <label class="field-label">ชื่อผู้ส่ง / ทีม</label>
+        <input type="text" placeholder="เช่น ThaiRunner Team" />
+      </div>
+      <div class="field-row" style="margin-bottom:0">
+        <label class="field-label">แหล่งอ้างอิง (ถ้ามี)</label>
+        <input type="text" placeholder="เช่น URL หรือชื่อสื่อ" />
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <i class="ti ti-info-circle" aria-hidden="true"></i>
+    <p>ข่าวที่ส่งจะถูกตรวจสอบโดยแอดมินก่อนเผยแพร่ โดยปกติใช้เวลา 1–24 ชั่วโมง</p>
+  </div>
+
+  <div class="actions">
+    <button class="btn-secondary">บันทึกแบบร่าง</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn-secondary" onclick="sendPrompt('ช่วยออกแบบหน้า preview ก่อน submit ข่าวหน่อย ↗')">ดูตัวอย่าง</button>
+      <button class="btn-primary">
+        <i class="ti ti-send" aria-hidden="true"></i> ส่งให้แอดมินตรวจสอบ
+      </button>
+    </div>
+  </div>
+</div>
